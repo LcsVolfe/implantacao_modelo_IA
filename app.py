@@ -18,8 +18,8 @@ def _call_model(texto: str):
         analise = dict()
         analise['texto'] = texto
 
-        st.write(f"- Neutral: {result['neutral']}")
         st.write(f"- Positive: {result['positive']}")
+        st.write(f"- Neutral: {result['neutral']}")
         st.write(f"- Negative: {result['negative']}")
 
         st.text("O resultado esta coerente?")
@@ -42,7 +42,6 @@ def _call_model(texto: str):
 
             st.write(message)
             utils.save_prediction(analise)
-
 
 txt = st.text_input("Insira o texto:", key='texto_analise')
 if txt:

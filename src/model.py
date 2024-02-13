@@ -15,7 +15,9 @@ model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
 def analyze_text(text):
     if not text:
         return
+    print(f"Texto entrada: {text}")
     translated = GoogleTranslator(source='auto', target='en').translate(text)
+    print(f"Texto saida: {translated}")
     encoded_input = tokenizer(translated, return_tensors='pt')
     output = model(**encoded_input)
     scores = output[0][0].detach().numpy()
