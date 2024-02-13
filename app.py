@@ -4,9 +4,9 @@ from src import utils
 from src.auth import check_password
 from src.model import analyze_text
 
+
 # if not check_password():
 #     st.stop()
-
 
 def _nova_analise():
     st.session_state.texto_analise = ''
