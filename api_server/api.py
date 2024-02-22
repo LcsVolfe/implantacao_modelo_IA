@@ -9,7 +9,6 @@ api = FastAPI()
 @api.get("/predict_sentimental")
 def predict_sentimental(message_text: str):
     return analyze_text(message_text)
-    # return {"positive": "predict_sentimental", "neutral": "predict_sentimental", "negative": "predict_sentimental"}
 
 
 @api.get("/get_dataset")

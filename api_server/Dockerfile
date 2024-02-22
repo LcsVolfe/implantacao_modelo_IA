@@ -9,9 +9,7 @@ COPY . /opt/app/
 RUN pip install -r requirements.txt
 
 EXPOSE 8000
-EXPOSE 8051
 
-ENTRYPOINT ["uvicorn", "api:api", "--reload"]
-ENTRYPOINT ["streamlit", "run", "app.py"]
+ENTRYPOINT ["uvicorn", "api:api"]
 
 

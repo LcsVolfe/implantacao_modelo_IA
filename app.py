@@ -1,10 +1,11 @@
 import requests
 import streamlit as st
 
-from src import utils
+from src.utils import save_prediction, get_all_predictions
+from src.auth import check_password
 
-# if not check_password():
-#     st.stop()
+if not check_password():
+    st.stop()
 
 def _nova_analise():
     st.session_state.texto_analise = ''
@@ -41,7 +42,7 @@ def _call_model(texto: str):
                 analise['CorrectPrediction'] = False
 
             st.write(message)
-            utils.save_prediction(analise)
+            save_prediction(analise)
 
 
 txt = st.text_input("Insira o texto:", key='texto_analise')
@@ -54,7 +55,7 @@ if txt:
 accuracy_predictions_on = st.toggle('Exibir acurácia', value=True)
 
 if accuracy_predictions_on:
-    predictions = utils.get_all_predictions()
+    predictions = get_all_predictions()
     num_total_predictions = len(predictions)
 
     accuracy_hist = [0]
