@@ -1,9 +1,7 @@
+import requests
 import streamlit as st
 
 from src import utils
-from src.auth import check_password
-from src.model import analyze_text
-
 
 # if not check_password():
 #     st.stop()
@@ -13,14 +11,16 @@ def _nova_analise():
 
 
 def _call_model(texto: str):
-    result = analyze_text(texto)
+    response = requests.get(f'http://127.0.0.1:8000/predict_sentimental?message_text={texto}')
+    print(response)
+    result = response.json()
     if result:
         analise = dict()
         analise['texto'] = texto
 
-        st.write(f"- Positive: {result['positive']}")
-        st.write(f"- Neutral: {result['neutral']}")
-        st.write(f"- Negative: {result['negative']}")
+        st.write(f"Positivo: {round(result['positive'] * 100, 2)}%")
+        st.write(f"Neutro: {round(result['neutral'] * 100, 2)}%")
+        st.write(f"Negativo: {round(result['negative'] * 100, 2)}%")
 
         st.text("O resultado esta coerente?")
         col1, col2, col3 = st.columns([1, 1, 5])
@@ -43,10 +43,13 @@ def _call_model(texto: str):
             st.write(message)
             utils.save_prediction(analise)
 
+
 txt = st.text_input("Insira o texto:", key='texto_analise')
 if txt:
     _call_model(txt)
     st.button('Nova analise', on_click=lambda: _nova_analise())
+
+
 
 accuracy_predictions_on = st.toggle('Exibir acurácia', value=True)
 
@@ -78,3 +81,8 @@ if accuracy_predictions_on:
     st.write(f'Total de feedbacks: {num_total_predictions}')
     st.subheader("Histórico de acurácia")
     st.line_chart(accuracy_hist)
+
+
+st.subheader('Exemplos dados de treinamento')
+response = requests.get(f'http://127.0.0.1:8000/get_dataset')
+st.dataframe(response.json())
