@@ -1,3 +1,5 @@
+import pickle
+
 import numpy as np
 
 from scipy.special import softmax
@@ -15,13 +17,15 @@ model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
 def analyze_text(text):
     if not text:
         return
-    print(f"Texto entrada: {text}")
-    translated = GoogleTranslator(source='auto', target='en').translate(text)
-    print(f"Texto saida: {translated}")
-    encoded_input = tokenizer(translated, return_tensors='pt')
-    output = model(**encoded_input)
-    scores = output[0][0].detach().numpy()
-    scores = softmax(scores)
+    with open('model.pkl', 'rb') as arquivo:
+        model = pickle.load(arquivo)
+        print(f"Texto entrada: {text}")
+        translated = GoogleTranslator(source='auto', target='en').translate(text)
+        print(f"Texto saida: {translated}")
+        encoded_input = tokenizer(translated, return_tensors='pt')
+        output = model(**encoded_input)
+        scores = output[0][0].detach().numpy()
+        scores = softmax(scores)
 
     ranking = np.argsort(scores)
     ranking = ranking[::-1]
