@@ -1,6 +1,6 @@
 import requests
 import streamlit as st
-
+from api_server.model_service import analyze_text
 from src.utils import save_prediction, get_all_predictions
 from src.auth import check_password
 
@@ -12,9 +12,11 @@ def _nova_analise():
 
 
 def _call_model(texto: str):
-    response = requests.get(f'http://127.0.0.1:8000/predict_sentimental?message_text={texto}')
-    print(response)
-    result = response.json()
+    #response = requests.get(f'http://127.0.0.1:8000/predict_sentimental?message_text={texto}')
+    #print(response)
+    #result = response.json()
+
+    result = analyze_text(texto)
     if result:
         analise = dict()
         analise['texto'] = texto
