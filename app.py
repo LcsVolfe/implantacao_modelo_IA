@@ -86,10 +86,3 @@ if accuracy_predictions_on:
     st.write(f'Total de feedbacks: {num_total_predictions}')
     st.subheader("Histórico de acurácia")
     st.line_chart(accuracy_hist)
-
-
-st.subheader('Exemplos dados de treinamento')
-#response = requests.get(f'http://127.0.0.1:8000/get_dataset')
-#st.dataframe(response.json())
-st.dataframe(load_dataset(f'{Path.cwd()}/api_server/assets/dataset.csv'))
-
