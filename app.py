@@ -3,6 +3,7 @@ import streamlit as st
 from api_server.model_service import analyze_text
 from src.utils import save_prediction, get_all_predictions
 from src.auth import check_password
+from api_server.dataset_service import load_dataset
 
 if not check_password():
     st.stop()
@@ -87,5 +88,6 @@ if accuracy_predictions_on:
 
 
 st.subheader('Exemplos dados de treinamento')
-response = requests.get(f'http://127.0.0.1:8000/get_dataset')
-st.dataframe(response.json())
+#response = requests.get(f'http://127.0.0.1:8000/get_dataset')
+#st.dataframe(response.json())
+st.dataframe(load_dataset())
