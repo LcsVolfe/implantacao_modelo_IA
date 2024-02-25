@@ -90,4 +90,6 @@ if accuracy_predictions_on:
 st.subheader('Exemplos dados de treinamento')
 #response = requests.get(f'http://127.0.0.1:8000/get_dataset')
 #st.dataframe(response.json())
+st.dataframe(load_dataset('/home/ubuntu/implantacao_modelo_IA/api_server/assets/dataset.csv'))
+st.dataframe(load_dataset('./assets/dataset.csv'))
 st.dataframe(load_dataset('./api_server/assets/dataset.csv'))
