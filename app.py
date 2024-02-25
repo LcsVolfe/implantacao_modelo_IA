@@ -4,6 +4,7 @@ from api_server.model_service import analyze_text
 from src.utils import save_prediction, get_all_predictions
 from src.auth import check_password
 from api_server.dataset_service import load_dataset
+from pathlib import Path
 
 if not check_password():
     st.stop()
@@ -90,6 +91,5 @@ if accuracy_predictions_on:
 st.subheader('Exemplos dados de treinamento')
 #response = requests.get(f'http://127.0.0.1:8000/get_dataset')
 #st.dataframe(response.json())
-st.dataframe(load_dataset('/home/ubuntu/implantacao_modelo_IA/api_server/assets/dataset.csv'))
-st.dataframe(load_dataset('./assets/dataset.csv'))
-st.dataframe(load_dataset('./api_server/assets/dataset.csv'))
+st.dataframe(load_dataset(f'{Path.cwd()}/api_server/assets/dataset.csv'))
+
